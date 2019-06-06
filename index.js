@@ -14,7 +14,6 @@ app.set('view engine', 'ejs') // Usar o EJS para renderizar o html
 app.use(express.static(path.join(__dirname,'public'))) // Conseguir acessar pasta public
 app.use(bodyParser.urlencoded({ extended : true}))
 
-
 app.get('/', async(req, res) => {
     const db = await dbConnection
     const categoriasDB = await db.all('select * from categorias;')
