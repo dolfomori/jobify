@@ -111,15 +111,14 @@ app.get('/admin/categorias', async (req,res) =>{
     })
 })
 
-app.get('/admin/categorias/nova', async (req,res) =>{
-    const db = await dbConnection
-    const categorias = await db.all('select * from categorias')
+app.get('/admin/categorias/nova', (req, res) => {
     res.render('admin/nova-categoria')
-})  
+})
 
-app.get('/admin/categorias/delete/:id', async (req,res) =>{
+app.get('/admin/categorias/delete/:id', async(req, res) => {
+    const { id } = req.params
     const db = await dbConnection
-    await db.run ('delete from categorias where id ='+req.params.id+'')
+    await db.run(`delete from categorias where id = ${id}`)
     res.redirect('/admin/categorias')
 })
 
@@ -131,9 +130,12 @@ app.post('/admin/categorias/nova', async(req,res)=>{
 }) 
 
 app.get('/admin/categorias/editar/:id', async (req,res) =>{
+    const { id } = req.params
     const db = await dbConnection
-    const categorias = await db.get('select * from categorias where id='+req.params.id)
-    res.render('admin/editar-categoria',{categorias})
+    const categorias = await db.get(`select * from categorias where id = ${id}`)
+    res.render('admin/editar-categoria',{
+        categorias
+    })
 })  
 
 app.post('/admin/categorias/editar/:id', async(req,res)=>{
@@ -147,8 +149,8 @@ app.post('/admin/categorias/editar/:id', async(req,res)=>{
 
 const init = async() =>{
     const db = await dbConnection
-    await db.run('create table if not exists categorias (id INTEGER PRIMARY KEY, categoria TEXT);')
-    await db.run('create table if not exists vagas (id INTEGER PRIMARY KEY, categoria INTEGER,titulo TEXT, descricao TEXT);')
+    await db.run('create table if not exists categorias (id INTEGER PRIMARY KEY, categoria TEXT)')
+    await db.run('create table if not exists vagas (id INTEGER PRIMARY KEY, categoria INTEGER,titulo TEXT, descricao TEXT)')
     //const categoria = 'Marketing team'
     //await db.run(`insert into categorias(categoria) values('${categoria}')`)
     //const vaga = 'Social Media'
