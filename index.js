@@ -6,6 +6,7 @@ const path = require ('path')
 const sqlite = require ('sqlite')
 dbConnection = sqlite.open(path.resolve(__dirname, 'banco.sqlite'), { Promise })
 
+app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs') // Usar o EJS para renderizar o html
 app.use(express.static('public')) // Conseguir acessar pasta public
 app.use(bodyParser.urlencoded({ extended : true}))
