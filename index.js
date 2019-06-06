@@ -40,7 +40,7 @@ app.get('/', async(req, res) => {
 
 app.get('/vaga/:id', async(req, res) => {
     const db = await dbConnection
-    const vaga = await db.get('select * from vagas where id ='+req.params.id)
+    const vaga = await db.get('select * from vagas where id ='+req.params.id+';')
     res.render('vaga', {
         vaga
     
@@ -55,7 +55,9 @@ app.get('/admin', (req,res) =>{
 app.get('/admin/vagas', async (req,res) =>{
     const db = await dbConnection
     const vagas = await db.all('select * from vagas;')
-    res.render('admin/vagas', {vagas})
+    res.render('admin/vagas', {
+        vagas
+    })
 })
 
 app.get('/admin/vagas/delete/:id', async (req,res) =>{
@@ -67,7 +69,9 @@ app.get('/admin/vagas/delete/:id', async (req,res) =>{
 app.get('/admin/vagas/nova', async (req,res) =>{
     const db = await dbConnection
     const categorias = await db.all('select * from categorias')
-    res.render('admin/nova-vaga',{ categorias })
+    res.render('admin/nova-vaga',{ 
+        categorias 
+    })
 
 })  
 
@@ -75,7 +79,9 @@ app.get('/admin/vagas/editar/:id', async (req,res) =>{
     const db = await dbConnection
     const categorias = await db.all('select * from categorias')
     const vaga = await db.get('select * from vagas where id = '+req.params.id)
-    res.render('admin/editar-vaga',{ categorias, vaga })
+    res.render('admin/editar-vaga',{ 
+        categorias, vaga 
+    })
 
 })  
 
@@ -100,7 +106,9 @@ app.post('/admin/vagas/editar/:id', async(req,res)=>{
 app.get('/admin/categorias', async (req,res) =>{
     const db = await dbConnection
     const categorias = await db.all('select * from categorias;')
-    res.render('admin/categorias', {categorias})
+    res.render('admin/categorias', {
+        categorias
+    })
 })
 
 app.get('/admin/categorias/nova', async (req,res) =>{
