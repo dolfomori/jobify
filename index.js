@@ -26,7 +26,7 @@ app.get('/', async(req, res) => {
     }) 
  
     res.render('home', {
-        categorias
+        categorias, vagas
     })
 })
 
