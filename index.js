@@ -1,17 +1,19 @@
 express = require('express')
 const app = express()
 const bodyParser = require ('body-parser')
+
 const path = require ('path')
-const ejs = require ('ejs')
+
 const sqlite = require ('sqlite')
-dbConnection = sqlite.open(path.resolve(__dirname, 'banco.sqlite'), { Promise })
+const dbConnection = sqlite.open(path.resolve(__dirname, 'banco.sqlite'), { Promise })
+
+const port = process.env.PORT || 3000
 
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs') // Usar o EJS para renderizar o html
 app.use(express.static(path.join(__dirname,'public'))) // Conseguir acessar pasta public
 app.use(bodyParser.urlencoded({ extended : true}))
 
-const port = process.env.PORT || 3000
 
 app.get('/', async(req, res) => {
     const db = await dbConnection
